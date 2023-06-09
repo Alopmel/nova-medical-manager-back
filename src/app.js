@@ -1,6 +1,11 @@
-import express from 'express'
+import express from 'express';
+import morgan from "morgan";
+import authRoutes from './routes/auth.routes';
 
-const app = express()
+const app = express();
 
-app.listen(3000)
-console.log('Server on port', 3000)
+app.use(morgan('dev'));
+
+app.use(authRoutes);
+
+export default app;
