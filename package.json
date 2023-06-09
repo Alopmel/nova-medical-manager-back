@@ -1,0 +1,24 @@
+{
+  "name": "nova-madical-manager-back",
+  "version": "1.0.0",
+  "description": "\"# nova-medical-manager-back\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alopmel/nova-medical-manager-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alopmel/nova-medical-manager-back/issues"
+  },
+  "homepage": "https://github.com/Alopmel/nova-medical-manager-back#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
