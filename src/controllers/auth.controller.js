@@ -1,13 +1,16 @@
 import User from "../models/user.model.js";
+import bcrypt from "bcryptjs";
 
 export const register = async (req, res) => {
     const {email, password, username} = req.body;
     
     try {
+        const passwordHash = await bcrypt.hash(password, 10) // Encriptar la contraseña
+        
         const newUser = new User({
             username,
             email,
-            password
+            password: passwordHash, 
         });
         
         const userSaved = await newUser.save();
