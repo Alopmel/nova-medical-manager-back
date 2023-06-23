@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: #cffde1;
+  background-image: 
+      radial-gradient(at 47% 33%, hsl(285.00, 38%, 75%) 0, transparent 59%), 
+      radial-gradient(at 82% 65%, hsl(44.75, 99%, 64%) 0, transparent 55%);
+  background-repeat: no-repeat; /* Evita que se repita el fondo */
+  background-attachment: fixed; /* Mantiene el fondo fijo mientras se desplaza el contenido */
+  background-size: cover; 
+}
