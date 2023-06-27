@@ -11,3 +11,7 @@ body{
   background-attachment: fixed; /* Mantiene el fondo fijo mientras se desplaza el contenido */
   background-size: cover; 
 }
+
+.bg-freelance{
+  background-image: url("{freelance}");
+}

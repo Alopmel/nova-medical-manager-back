@@ -1,11 +1,18 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
+import { TOKEN_SECRET } from "../config.js";
+import Cookies from 'js-cookie';
 
 export const register = async (req, res) => {
     const {email, password, username} = req.body;
     
     try {
+
+        const userFound = await User.findOne({email})
+        if (userFound) return res.status(400).json(["El email insertado está en uso"]);
+
         const passwordHash = await bcrypt.hash(password, 10) // Encriptar la contraseña
         
         const newUser = new User({
@@ -16,8 +23,12 @@ export const register = async (req, res) => {
         
         const userSaved = await newUser.save(); // Se guarda el usuario
         const token = await createAccessToken({id: userSaved._id}); // Se crea el token
-        
-        res.cookie('token', token); // Se guarda en una cookie
+
+        res.cookie("token", token, {
+            sameSite: "none",
+            secure: false,
+            httpOnly: false
+        }); // Se guarda en una cookie
 
         res.json({ // Devuelve la respuesta
             id: userSaved._id,
@@ -45,12 +56,16 @@ export const login = async (req, res) => {
         
         const token = await createAccessToken({id: userFound._id}); // Se crea el token
         
-        res.cookie('token', token); // Se guarda en una cookie
+        res.cookie("token", token, {
+            sameSite: "none",
+            secure: false,
+            httpOnly: false
+        }); // Se guarda en una cookie
 
         res.json({ // Devuelve la respuesta
             id: userFound._id,
             username: userFound.username,
-            email: userFound.email,
+            token: userFound.token,
             createdAt: userFound.createdAt,
             updateAt: userFound.updatedAt
         });
@@ -78,6 +93,23 @@ export const profile = async (req, res) => {
         createdAt: userFound.createdAt,
         updateAt: userFound.updateAt,
     });
-
-    res.send('profile')
 };
+
+export const verifyToken = async (req, res) => {
+    const { token } = req.cookies;
+    if (!token) return res.send(false);
+  
+    jwt.verify(token, TOKEN_SECRET, async (error, user) => {
+      if (error) return res.sendStatus(401);
+  
+      const userFound = await User.findById(user.id);
+      if (!userFound) return res.sendStatus(401);
+  
+      return res.json({
+        id: userFound._id,
+        username: userFound.username,
+        email: userFound.email,
+      });
+    });
+  };
+  

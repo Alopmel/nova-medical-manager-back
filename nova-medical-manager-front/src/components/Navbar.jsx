@@ -5,7 +5,7 @@ function Navbar() {
     const { isAuthenticated, logout , user } = useAuth();
 
   return (
-    <nav className='bg-white my-3 flex justify-between py-5 px-10 '>
+    <nav className='bg-white flex justify-between py-5 px-10 '>
         <ul className='flex gap-x-2'>
             <li>
                 <Link to="/">Inicio</Link>
