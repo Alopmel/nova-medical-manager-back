@@ -17,7 +17,7 @@ const Nav = () => {
   return (
     <div className="shadow-md w-full fixed top-0 left-0 z-50">
       <div className="bg-white flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4">
-        <h1 className="cursor-pointer flex items-center w-full text-3xl font-bold text-[#00df9a]">
+        <h1 className="cursor-pointer flex items-center w-full text-3xl font-bold">
           <Link to="/">Nova Medical Manager.</Link>
         </h1>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import callme from '../assets/img/callme.jpg'
 
 function CallYou() {
   return (
@@ -10,6 +10,7 @@ function CallYou() {
             <p className="text-sm md:text-base leading-snug text-opacity-100">
               Por favor, deja tus datos y en qué puedo ayudarte y te llamaré!
             </p>
+            
           </div>
           <div className="flex flex-col w-full lg:w-2/3 justify-center">
             <div className="container w-full px-4">
