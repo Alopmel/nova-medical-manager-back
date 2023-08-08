@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
 import Cookies from 'js-cookie';
 
+
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -24,6 +25,7 @@ export const AuthProvider = ({children}) => {
             const res = await registerRequest(user)
             setUser(res.data);
             setIsAuthenticated(true);
+            
         } catch (error) {
             // console.log(error.response.data);
             setErrors(error.response.data);// recoge el mensaje que viene del back

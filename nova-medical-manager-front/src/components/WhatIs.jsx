@@ -3,7 +3,7 @@ import mujerImage from '../assets/img/mujer-movil.jpeg'
 
 function WhatIs() {
   return (
-    <div className='bg-white flex justify-between items-center max-w-[1240px] mx-auto px-4'>
+    <div className='bg-[#fefefe] flex justify-between items-center mx-auto px-4'>
     <div className='max-w-[1240px] mx-auto grid md:grid-cols-2'>
       <img className='w-[500px] mx-auto my-24' src={mujerImage} alt='/' />
       <div className='flex flex-col justify-center'>

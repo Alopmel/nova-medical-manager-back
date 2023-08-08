@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 import Cookies from 'js-cookie';
 
+
 export const register = async (req, res) => {
     const {email, password, username} = req.body;
     
@@ -25,8 +26,8 @@ export const register = async (req, res) => {
         const token = await createAccessToken({id: userSaved._id}); // Se crea el token
 
         res.cookie("token", token, {
-            sameSite: "none",
-            secure: false,
+            sameSite: "Lax",
+            
             httpOnly: false
         }); // Se guarda en una cookie
 
@@ -57,8 +58,8 @@ export const login = async (req, res) => {
         const token = await createAccessToken({id: userFound._id}); // Se crea el token
         
         res.cookie("token", token, {
-            sameSite: "none",
-            secure: false,
+            sameSite: "Lax",
+            
             httpOnly: false
         }); // Se guarda en una cookie
 

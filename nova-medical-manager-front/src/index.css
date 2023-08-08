@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+.bkg_login{
   background-color: #fee18d;
   background-image: 
   radial-gradient(at 47% 33%, hsl(285.00, 38%, 75%) 0, transparent 59%), 

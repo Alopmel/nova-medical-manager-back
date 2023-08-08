@@ -1,7 +1,14 @@
+import { useState } from "react";
+import Modal from "./Modal";
+
 function WhyYouNeed() {
+    const [showModal, setShowModal] = useState(false);
+
+    const handleOnClose = () => setShowModal(false);
+
     return (
       <div>
-        <div className="z-10 bg-[#CFFDE1] bg-opacity-30 px-3 md:px-40 py-20 mx-auto max-w-[1240px] backdrop-blur-md ">
+        <div className="z-10 bg-[#CFFDE1] bg-opacity-50 px-3 md:px-40 py-20 mx-auto">
         <div class="text-center mx-auto lg:mb-20 max-w-[510px]">
                <h2
                   class="
@@ -63,9 +70,10 @@ function WhyYouNeed() {
               <span className="text-4xl font-medium">Aún tienes dudas?</span> <br />
               <span className="text-lg">Agenda una llamada !</span>
             </p>
-            <button className="px-5 font-medium bg-fed049 hover:bg-fcbe08 text-[#0f0f0f] w-[250px] rounded-md my-6 mx-auto md:mx-0 py-3">LLÁMANOS</button>
+            <button  onClick={()=> setShowModal(true)} className="px-5 font-medium bg-fed049 hover:bg-fcbe08 text-[#0f0f0f] w-[250px] rounded-md my-6 mx-auto md:mx-0 py-3">LLÁMANOS</button>
           </div>
         </div>
+        <Modal onClose={handleOnClose} visible={showModal}/>
       </div>
     );
   }

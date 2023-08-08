@@ -3,7 +3,7 @@ import mujerImage2 from '../assets/img/mujer.jpg'
 
 function WhyMe() {
   return (
-    <div className='bg-white flex justify-between items-center max-w-[1240px] mx-auto px-4'>
+    <div className='bg-white flex justify-between items-center mx-auto px-4'>
     <div className='max-w-[1240px] mx-auto grid md:grid-cols-2'>
       
       <div className='flex flex-col justify-center'>

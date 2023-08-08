@@ -3,7 +3,7 @@ import Card from "./Cards";
 
 function Services() {
   return (
-    <section className="pt-20 px-10 lg:pt-[120px] pb-12 lg:pb-[90px] max-w-[1240px] mx-auto bg-[#CCA8D8] bg-opacity-30  backdrop-blur-md">
+    <section className="pt-20 px-10 lg:pt-[120px] pb-12 lg:pb-[90px]  mx-auto bg-[#CCA8D8] bg-opacity-30  backdrop-blur-md">
         <div className="flex flex-wrap -mx-4">
             <div className="w-full px-4">
             <div className="text-center mx-auto lg:mb-20 max-w-[510px]">
@@ -26,22 +26,30 @@ function Services() {
             />
             </Link>
             
+            <Link to="/servicios/asesoria-digital">
+                <Card
+                imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/trowel.png"
+                title="Asesoría Digital"
+                description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
+                />
+            </Link>  
+
+            <Link to="/servicios/estrategia-contenidos">
+                <Card
+                imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/package-delivery.png"
+                title="Estrategia de Contenidos"
+                description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
+                />
+            </Link>          
             
-            <Card
-            imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/trowel.png"
-            title="Asesoría Digital"
-            description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
-            />
-            <Card
-            imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/package-delivery.png"
-            title="Estrategia de Contenidos"
-            description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
-            />
-            <Card
-            imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/package-delivery.png"
-            title="Formaciones"
-            description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
-            />
+            <Link to="/servicios/formacion">
+                <Card
+                imgSrc="https://tailus.io/sources/blocks/stacked/preview/images/avatars/package-delivery.png"
+                title="Formaciones"
+                description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
+                />
+            </Link>
+    
         </div>
         <Outlet /> {/* Renderiza los componentes anidados en la ruta "/servicios" */}
     </section>

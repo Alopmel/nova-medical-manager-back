@@ -1,9 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
 import Card from "./Cards";
 
+
+
 function Services() {
   return (
-    <section className="pt-20 px-10 lg:pt-[120px] pb-12 lg:pb-[90px] max-w-[1240px] mx-auto bg-[#CCA8D8] bg-opacity-30  backdrop-blur-md">
+    <section className="pt-20 px-10 lg:pt-[120px] pb-12 lg:pb-[90px] mx-auto bg-[#86E3CE] bg-opacity-30  ">
       <div className="flex flex-wrap -mx-4">
         <div className="w-full px-4">
           <div className="text-center mx-auto lg:mb-20 max-w-[510px]">
@@ -42,7 +44,7 @@ function Services() {
           description="Neque Dolor, fugiat non cum doloribus aperiam voluptates nostrum."
         />
       </div>
-      <Outlet/>
+
     </section>
   );
 }

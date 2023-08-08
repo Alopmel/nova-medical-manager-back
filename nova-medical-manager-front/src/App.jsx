@@ -8,8 +8,13 @@ import UserProfile from "./pages/UserProfile";
 import Navbar from "./components/Navbar";
 import ServicePage from "./pages/ServicePage";
 import CommunityManagerPage from "./pages/CommunityManagerPage";
-
+import DigitalConsultancePage from "./pages/DigitalConsultancePage";
+import ContentSrategy from "./pages/ContentSrategy";
 import ProtectedRoute from "./ProtectedRoute";
+import TrainingPage from "./pages/TrainingPage";
+import WhoImPage from "./pages/WhoImPage";
+import AdminPage from "./pages/AdminPage";
+
 
 
 function App() {
@@ -21,15 +26,19 @@ function App() {
           <Route path='/' element={<HomePage/>} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/registro' element={<RegisterPage />} />
-          <Route path='/contacto' element={<h1>¿Quién Soy?</h1>} />
+          <Route path='/contacto' element={<WhoImPage/> } />
           <Route path='/servicios' element={<ServicePage/>} />
           <Route path='/servicios/community-manager' element={<CommunityManagerPage />} />
+          <Route path='/servicios/asesoria-digital' element={<DigitalConsultancePage />} />
+          <Route path='/servicios/estrategia-contenidos' element={<ContentSrategy />} />
+          <Route path='/servicios/formacion' element={<TrainingPage /> } />
         
         <Route element={<ProtectedRoute/>}>
           <Route path='/perfil' element={<UserProfile/>} />
         </Route> 
         </Routes>
       </BrowserRouter>
+
     </AuthProvider>
 
   )

@@ -21,7 +21,7 @@ function RegisterPage() {
     });
 
   return (
-    <div className="flex h-[calc(100vh-100px)]  items-center justify-center">
+    <div className="bkg_login flex h-screen items-center justify-center">
         <div className=" backdrop-blur-md  bg-[#CFFDE1] bg-opacity-30 max-w-md p-10 rounded-md">
         {
             registerErrors.map((error, i) =>(
