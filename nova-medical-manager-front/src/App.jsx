@@ -35,6 +35,7 @@ function App() {
         
         <Route element={<ProtectedRoute/>}>
           <Route path='/perfil' element={<UserProfile/>} />
+          <Route path='/administrador' element={<AdminPage/>} />
         </Route> 
         </Routes>
       </BrowserRouter>

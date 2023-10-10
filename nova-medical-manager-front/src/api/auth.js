@@ -1,10 +1,10 @@
-import axios from "./axios";
+import axios from "axios";
 
-export const registerRequest = user => axios.post('/register', user); // usar las llamadas del back no en español
+const API = 'http://localhost:4000/api'
+// Le mando el usuario a la petición post
+export const registerRequest = user => axios.post(`${API}/registro`, user);
 
-export const loginRequest = user => axios.post('/login', user);
+export const loginRequest = user => axios.post(`${API}/login`, user);
 
-export const verifyTokenRequest = axios.get('/verify');
-
-export const addContactRequest = contact => axios.post('/contacts', contact); // Nueva función para agregar contactos
-
+export const verifyTokenRequest = () => axios.get(`${API}/verify`)
+export const addContactRequest = contact => axios.post(`${API}/contacts`, contact); // Nueva función para agregar contactos

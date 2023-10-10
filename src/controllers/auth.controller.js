@@ -1,88 +1,94 @@
-import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import { createAccessToken } from "../libs/jwt.js";
+import { createAccesToken } from "../libs/jwt.js";
+import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
-import Cookies from 'js-cookie';
 
-
+// Función para el registro
 export const register = async (req, res) => {
-    const {email, password, username} = req.body;
+    const {username, email, phone, password, role} = req.body
     
     try {
+        // Buscamos si ya existe el usuario
+        const userFound = await User.findOne({email});
 
-        const userFound = await User.findOne({email})
-        if (userFound) return res.status(400).json(["El email insertado está en uso"]);
+        if(userFound) return res.status(400).json(['El correo ya está en uso']);
 
-        const passwordHash = await bcrypt.hash(password, 10) // Encriptar la contraseña
-        
+        // Encriptamos la contraseña
+        const passwordHash = await bcrypt.hash(password, 10);
+        // Creamos una instancia como objeto
         const newUser = new User({
             username,
             email,
-            password: passwordHash, 
+            phone,
+            password: passwordHash,
+            role
         });
-        
-        const userSaved = await newUser.save(); // Se guarda el usuario
-        const token = await createAccessToken({id: userSaved._id}); // Se crea el token
-
-        res.cookie("token", token, {
-            sameSite: "Lax",
-            
-            httpOnly: false
-        }); // Se guarda en una cookie
-
-        res.json({ // Devuelve la respuesta
+        // Guardamos el usuario
+        const userSaved = await newUser.save();
+        // Le pasamos el id como parámetro y nos devuelve el token 
+        const token =await createAccesToken({id: userSaved._id}) 
+        // La guarda en una cookie
+        res.cookie('token', token);
+        // Lo que va a recibir el front en forma json
+        res.json({
             id: userSaved._id,
             username: userSaved.username,
             email: userSaved.email,
+            phone: userSaved.phone,
+            role: userSaved.role,
             createdAt: userSaved.createdAt,
-            updateAt: userSaved.updatedAt
-        });
+            updatedAt: userSaved.updatedAt
+        }); 
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });        
     };    
 };
 
 export const login = async (req, res) => {
-    const {email, password} = req.body;
+    const {email, password} = req.body
     
     try {
+        // Buscamos si existe el email
+        const userFound = await User.findOne({email})
 
-        const userFound = await User.findOne({email});
-        if (!userFound) return res.status(400).json({message: "User not found"}); // Si no encuentra el usuario
+        if (!userFound) return res.status(400).json(["Usuario no encontrado"]);
 
-        const isMatch = await bcrypt.compare(password, userFound.password); // Compara la contraseña
-        
-        if (!isMatch) return res.status(400).json({ message: "Invalid Credencial"}); // Si no coincide la contraseña
-        
-        const token = await createAccessToken({id: userFound._id}); // Se crea el token
-        
-        res.cookie("token", token, {
-            sameSite: "Lax",
-            
-            httpOnly: false
-        }); // Se guarda en una cookie
+        // Si lo encuentra comparamos la contraseña
+        const isMatch = await bcrypt.compare(password, userFound.password);
 
-        res.json({ // Devuelve la respuesta
+        if (!isMatch) return res.status(400).json(["Credenciales inválidas"]);
+
+        // Le pasamos el id como parámetro y nos devuelve el token 
+        const token =await createAccesToken({id: userFound._id}) 
+        // La guarda en una cookie
+        res.cookie('token', token);
+        // Lo que va a recibir el front en forma json
+        res.json({
             id: userFound._id,
             username: userFound.username,
-            token: userFound.token,
+            email: userFound.email,
+            phone: userFound.phone,
+            role: userFound.role,
             createdAt: userFound.createdAt,
-            updateAt: userFound.updatedAt
-        });
+            updatedAt: userFound.updatedAt,
+            token: token
+        }); 
     } catch (error) {
-        res.status(500).json({message: error.message});
+        res.status(500).json({ message: error.message });        
     };    
 };
 
 export const logout = (req, res) => {
     res.cookie('token', "", {
         expires: new Date(0)
-    });
-    return res.sendStatus(200);
-};
+    })
+    return res.sendStatus(200)
+}
+
 
 export const profile = async (req, res) => {
+    // Esto devuelve la info de user
     const userFound = await User.findById(req.user.id) // Me devuelve toda la info del usuario
     
     if (!userFound) return res.status(400).json({message: "User not found"});
@@ -91,19 +97,23 @@ export const profile = async (req, res) => {
         id: userFound._id,
         username: userFound.username,
         email: userFound.email,
+        phone: userFound.phone,
+        role: userFound.role,
         createdAt: userFound.createdAt,
-        updateAt: userFound.updateAt,
+        updatedAt: userFound.updatedAt
     });
-};
+}
 
 export const verifyToken = async (req, res) => {
-    const { token } = req.cookies;
+   const { token } = req.cookies;
+    console.log(req.cookies);
     if (!token) return res.send(false);
-  
+    console.log(token);
     jwt.verify(token, TOKEN_SECRET, async (error, user) => {
       if (error) return res.sendStatus(401);
   
       const userFound = await User.findById(user.id);
+      console.log(userFound)
       if (!userFound) return res.sendStatus(401);
   
       return res.json({
@@ -113,4 +123,29 @@ export const verifyToken = async (req, res) => {
       });
     });
   };
+/*
+  export const verifyToken = async (req, res) => {
+    const { token } = req.cookies;
   
+    if (!token) {
+      return res.status(401).json({ message: 'Token no presente' });
+    }
+  
+    try {
+      const decoded = jwt.verify(token, 'TOKEN_SECRET'); // Reemplaza 'tu_clave_secreta' con la clave que estás utilizando
+  
+      const userFound = await User.findById(decoded.id);
+  
+      if (!userFound) {
+        return res.status(401).json({ message: 'Usuario no encontrado' });
+      }
+  
+      return res.json({
+        id: userFound._id,
+        username: userFound.username,
+        email: userFound.email,
+      });
+    } catch (error) {
+      return res.status(401).json({ message: 'Token inválido' });
+    }
+  };*/

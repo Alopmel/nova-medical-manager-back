@@ -1,20 +1,41 @@
-import { useForm } from "react-hook-form"
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
 
 
 function LoginPage() {
-
-    const {
-        register, 
-        handleSubmit,
-        formState: {errors},
-    } = useForm();
-    const {signin, errors: signinErrors,  isAuthenticated} = useAuth();
+    const { signin, isAuthenticated, isAdmin,user, errors: signinErrors } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
     
-    const onSubmit = handleSubmit(data =>{
-        signin(data);
-    }) 
+    useEffect(() => {
+      if (isAdmin) {
+        navigate("/administrador");
+      } else if (isAuthenticated) {
+        navigate("/perfil");
+      }
+    }, [isAdmin, isAuthenticated]);
+    // useEffect(() => {
+    //   if (isAuthenticated && isAdmin) {
+    //       navigate("/administrador");
+    //     } else {
+    //       navigate("/perfil");
+    //     }
+    //   }
+    // , [isAuthenticated, isAdmin]);
+    
+    // Hace el post de los datos de usuario
+    const onSubmit = handleSubmit((data) => {
+      signin(data)
+    })
+
+    /*
+    * Función para el login 
+    * Verifica si está autentificado
+    * Si lo está y tiene el rol 2 va a la p. de administrador
+    * Si no tiene el rol 2 va a la página del perfil
+    */
 
   return (
     <div className="bkg_login flex h-screen items-center justify-center">

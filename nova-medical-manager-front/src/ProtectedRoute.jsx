@@ -2,16 +2,23 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
 function ProtectedRoute() {
-    const {loading, isAuthenticated }= useAuth();  
-    console.log(loading, isAuthenticated);
+  const { user, isAdmin, isAuthenticated } = useAuth();
 
-    if (loading) return <h1> Loading...</h1>;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if (!isAuthenticated) return <Navigate to="/login" replace />;
+  // Si el usuario está autenticado, verifica si es administrador.
+  if (isAdmin) {
+    return (
+      <>
+        <Outlet /> {/* Deja un Outlet para las rutas anidadas */}
+      </>
+    );
+  }
 
-  return (
-  <Outlet />
-  );
+  // Si no es administrador, muestra la página de perfil.
+  return <Outlet />; // Redirige a la página de perfil
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;
